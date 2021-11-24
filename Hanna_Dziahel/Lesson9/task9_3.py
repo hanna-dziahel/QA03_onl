@@ -10,10 +10,14 @@
 
 class Student:
     """Student's properties"""
-    def __init__(self, name: str, group_number: int, progress: int):
+    def __init__(self, name: str, group_number: int, marks: list):
         self.name = name
         self.group_number = group_number
-        self.progress = progress
+        self.marks = marks
+
+    def count_average_progress(self):
+        progress = sum(self.marks) / len(self.marks)
+        return progress
 
 
 class School:
@@ -37,15 +41,17 @@ class School:
     def show_students_5_6(self):
         """
         This function shows name and number of group of students which have
-        progress 5 or 6
+        marks 5 or 6
         :return:
         """
         # Объявляем пустой список, куда будем записывать данные студентов,
         # соответствующих критерию поиска
         students_with_5_and_6 = []
+
         # Через for проходим по каждому студенту их списка студентов данного класса
         for student in self.students:
-            if student.progress == 5 or student.progress == 6:
+            set_marks = set(student.marks)
+            if set_marks == {5} or set_marks == {6} or set_marks == {5, 6} or set_marks == {6, 5}:
                 # С помощью append добавляем к пустому списку найденные значения
                 students_with_5_and_6.append({
                     "name": student.name,
@@ -53,10 +59,10 @@ class School:
                 })
         # Если в список ничего не записали, выводим сообщение о том, что таких студентов нет
         if not students_with_5_and_6:
-            print("There are no students which have progress 5 or 6")
+            print("There are no students which have marks 5 or 6")
         # Если студенты были найдены, выводим сообщение об этом и этот список
         else:
-            print("There are students which have progress 5 and 6",
+            print("There are students which have marks 5 and 6",
                   students_with_5_and_6)
 
     # Добавить возможность вывода учеников заданной группы
@@ -85,7 +91,7 @@ class School:
     # Добавить возможность вывода учеников претендующих на автомат(ср. балл >= 7)
     def show_best_students(self):
         """
-        This fucntion shows students with progress 7 or more
+        This function shows students with marks 7 or more
         :return:
         """
         # Объявляем пустой список, куда будем записывать данные студентов,
@@ -93,28 +99,28 @@ class School:
         best_students = []
         # Через for проходим по каждому студенту их списка студентов данного класса
         for student in self.students:
-            if student.progress >= 7:
+            if student.count_average_progress() >= 7:
                 # С помощью append добавляем к пустому списку найденные значенияv
                 best_students.append(student.name)
         # Если в список ничего не записали, выводим сообщение о том, что таких студентов нет
         if not best_students:
-            print("There are no students with progress 7 and more")
+            print("There are no students with marks 7 and more")
         # Если студенты были найдены, выводим сообщение об этом и этот список
         else:
-            print("There are students with progress 7 and more", best_students)
+            print("There are students with marks 7 and more", best_students)
 
 
 students_in_school_1 = [
-    Student("Abramov V.", 1, 5),
-    Student("Belyi R.", 2, 8),
-    Student("Ahmedova Y.", 1, 10),
-    Student("Usovich I.", 2, 6),
-    Student("Saburov N.", 2, 9)
+    Student("Abramov V.", 1, [7, 5, 8, 10, 10]),
+    Student("Belyi R.", 2, [10, 6, 4, 10, 4]),
+    Student("Ahmedova Y.", 1, [6, 6, 6, 5, 5]),
+    Student("Usovich I.", 2, [5, 5, 5, 5, 5]),
+    Student("Saburov N.", 2, [5, 6, 6, 6, 6])
 ]
 
 school1 = School("1", students_in_school_1)
 school1.show_students_from_group(2)
-school1.add_students([Student("Sherbakov A.", 2, 8)])
+school1.add_students([Student("Sherbakov A.", 2, [4, 7, 8, 6, 5])])
 print(school1.students)
 school1.show_best_students()
 school1.show_students_5_6()
