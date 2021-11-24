@@ -44,6 +44,9 @@ class Flower():
     def __str__(self):
         return f"Информация о цветке по цвету и типу - {self.color} {self.get_class_name()}"
 
+    def __repr__(self):
+        return f"{self.color} {self.get_class_name()}"
+
     # Создаем статический метод, котороый принтит объекты класса Flower,
     # а не ссылки на объекты
     @staticmethod
@@ -277,7 +280,7 @@ class Bouquet:
 
     # Используем магический метод, чтобы получить цветок по индексу
     def __getitem__(self, item):
-        if 0<=item<len(self.flowers):
+        if 0 <= item < len(self.flowers):
             return self.flowers[item]
         else:
             raise IndexError("Index is outside of boundaries of collection")
@@ -288,6 +291,7 @@ class Bouquet:
 
 rose = Rose(100, "Pink", 5)
 blue = Violet(10, "Blue", 9)
+#print(blue)
 # 1 - вывести информацию о цветке
 # print(Rose(100, "Pink", 5))
 
@@ -302,16 +306,16 @@ best_bouquet = Bouquet([Rose(100, "Red", 5), Tulip(30, "Blue", 10), rose],
 # print(best_bouquet.count_freshness_time())
 
 # 4 - Cортировка цветов в букете на основе различных параметров
-# best_bouquet.sort_flowers()
+#best_bouquet.sort_flowers()
 
 # 5 - Поиск цветов в букете на основе различных параметров
 # best_bouquet.search_flowers()
 
 # 6 - Узнать, есть ли цветок в букете (__contains__)
-# print(blue in best_bouquet.flowers)
+#print(blue in best_bouquet.flowers)
 
 # 7 - Возможность получения цветка по индексу (__getitem__)
-# print(best_bouquet.flowers[0])
+print(best_bouquet[-3])
 
 # 8 - Возможность пройтись по букету и получить каждый цветок по-отдельности (__iter__)
 #for flower in best_bouquet.flowers:
